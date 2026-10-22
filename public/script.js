@@ -159,6 +159,111 @@ document.addEventListener('DOMContentLoaded', function () {
     return 'QRIS';
   }
 
+  /* ===== Dialog kustom pengganti alert()/confirm() bawaan browser ===== */
+  const dialogEl = document.getElementById('meera-dialog');
+  let dialogResolve = null;
+  let dialogLastFocus = null;
+
+  function closeDialog(result) {
+    if (!dialogEl || dialogEl.hidden) return;
+    dialogEl.hidden = true;
+    document.body.style.overflow = '';
+
+    const resolve = dialogResolve;
+    dialogResolve = null;
+
+    if (dialogLastFocus && typeof dialogLastFocus.focus === 'function') {
+      dialogLastFocus.focus();
+    }
+    if (resolve) resolve(result);
+  }
+
+  // Pemakaian: await showDialog({ type, title, message, details, confirmText, cancelText })
+  // type: 'success' | 'error' | 'warning' | 'info'. Mengembalikan Promise<boolean>
+  // (true = tombol utama, false = Batal / Esc / klik latar).
+  function showDialog(options) {
+    const opts = Object.assign({
+      type: 'info',
+      title: '',
+      message: '',
+      details: [],
+      confirmText: 'Mengerti',
+      cancelText: ''
+    }, options);
+
+    if (dialogResolve) closeDialog(false);
+
+    const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+    const iconEl = document.getElementById('meera-dialog-icon');
+    const titleEl = document.getElementById('meera-dialog-title');
+    const messageEl = document.getElementById('meera-dialog-message');
+    const detailsEl = document.getElementById('meera-dialog-details');
+    const okBtn = document.getElementById('meera-dialog-ok');
+    const cancelBtn = document.getElementById('meera-dialog-cancel');
+
+    dialogEl.dataset.type = opts.type;
+    iconEl.textContent = icons[opts.type] || icons.info;
+    titleEl.textContent = opts.title;
+    messageEl.textContent = opts.message;
+    messageEl.hidden = !opts.message;
+
+    // textContent dipakai agar input pelanggan (mis. nama) tidak bisa menyisipkan HTML
+    detailsEl.innerHTML = '';
+    opts.details.forEach(function (pair) {
+      const row = document.createElement('div');
+      const dt = document.createElement('dt');
+      const dd = document.createElement('dd');
+      dt.textContent = pair[0];
+      dd.textContent = pair[1];
+      row.appendChild(dt);
+      row.appendChild(dd);
+      detailsEl.appendChild(row);
+    });
+    detailsEl.hidden = opts.details.length === 0;
+
+    okBtn.textContent = opts.confirmText;
+    cancelBtn.textContent = opts.cancelText;
+    cancelBtn.hidden = !opts.cancelText;
+
+    dialogLastFocus = document.activeElement;
+    dialogEl.hidden = false;
+    document.body.style.overflow = 'hidden';
+    okBtn.focus();
+
+    return new Promise(function (resolve) {
+      dialogResolve = resolve;
+    });
+  }
+
+  if (dialogEl) {
+    document.getElementById('meera-dialog-ok').addEventListener('click', function () { closeDialog(true); });
+    document.getElementById('meera-dialog-cancel').addEventListener('click', function () { closeDialog(false); });
+    dialogEl.querySelector('[data-dialog-close]').addEventListener('click', function () { closeDialog(false); });
+
+    document.addEventListener('keydown', function (e) {
+      if (dialogEl.hidden) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeDialog(false);
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusables = Array.from(dialogEl.querySelectorAll('button')).filter(function (b) { return !b.hidden; });
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
   let isSubmittingOrder = false;
 
   window.confirmOrder = async function () {
@@ -172,12 +277,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableNote = tableInput ? tableInput.value.trim() : '-';
 
     if (!name) {
-      alert('Mohon isi nama pemesan terlebih dahulu.');
+      await showDialog({
+        type: 'warning',
+        title: 'Nama pemesan belum diisi',
+        message: 'Mohon isi nama pemesan terlebih dahulu agar barista tahu pesanan ini untuk siapa.',
+        confirmText: 'Isi Nama'
+      });
       if (nameInput) nameInput.focus();
       return;
     }
     if (cart.length === 0) {
-      alert('Keranjang belanja Anda masih kosong!');
+      await showDialog({
+        type: 'warning',
+        title: 'Keranjang masih kosong',
+        message: 'Keranjang belanja Anda masih kosong. Pilih menu favorit Anda terlebih dahulu.',
+        confirmText: 'Oke'
+      });
       return;
     }
 
@@ -239,18 +354,29 @@ document.addEventListener('DOMContentLoaded', function () {
       renderCart();
       closeCartDrawer();
       showToast(`Pesanan #${savedOrder.orderNumber} berhasil dikirim!`);
-      alert(
-        `Pesanan berhasil dibuat!\n\n` +
-        `Nomor Pesanan: #${savedOrder.orderNumber}\n` +
-        `Nama Pemesan: ${savedOrder.customerName}\n` +
-        `Catatan: ${savedOrder.tableNote || '-'}\n` +
-        `Metode Pembayaran: ${savedOrder.paymentMethod}\n` +
-        `Total Pembayaran: Rp ${Number(savedOrder.totalAmount).toLocaleString('id-ID')}\n` +
-        `Status: ${savedOrder.status}\n\n` +
-        `Barista Meera Coffee segera menyiapkan pesanan Anda.`
-      );
+
+      // Tanpa await: tombol langsung kembali normal, dialog tampil di atasnya
+      showDialog({
+        type: 'success',
+        title: 'Pesanan berhasil dibuat!',
+        message: 'Barista Meera Coffee segera menyiapkan pesanan Anda.',
+        details: [
+          ['Nomor Pesanan', `#${savedOrder.orderNumber}`],
+          ['Nama Pemesan', savedOrder.customerName],
+          ['Catatan', savedOrder.tableNote || '-'],
+          ['Metode Pembayaran', savedOrder.paymentMethod],
+          ['Total Pembayaran', `Rp ${Number(savedOrder.totalAmount).toLocaleString('id-ID')}`],
+          ['Status', savedOrder.status]
+        ],
+        confirmText: 'Selesai'
+      });
     } catch (error) {
-      alert(`Maaf, pesanan belum dapat diproses:\n${error.message || 'Terjadi gangguan jaringan. Keranjang Anda tetap tersimpan.'}`);
+      showDialog({
+        type: 'error',
+        title: 'Pesanan belum dapat diproses',
+        message: error.message || 'Terjadi gangguan jaringan. Keranjang Anda tetap tersimpan.',
+        confirmText: 'Coba Lagi'
+      });
     } finally {
       isSubmittingOrder = false;
       if (confirmBtn) {
