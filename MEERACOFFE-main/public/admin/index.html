@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barista &amp; Admin Portal — Meera Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       DASHBOARD UTAMA ADMIN / BARISTA MEERA COFFEE
+       Terbuka langsung tanpa login.
+       ======================================================================== -->
+  <div id="dashboard-screen" class="dashboard-shell">
+    <!-- Sidebar / Top Navigation -->
+    <aside class="dashboard-sidebar" aria-label="Menu Navigasi Admin">
+      <div class="sidebar-brand">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZfnvPM9DEH76M1lpQmup1-hyheLau6ORiGJMQpf4iYSnYZf3rU9p8TTDeDiBpKEZgmeGUtNtaXgf_X3afsQD7brOoE1OTjRubYvuaSvUA_1Z2tZy03J-_u-d2LPFw1QAaw0fRJeyhanPC3FOVdtJ0Yke8ea5FZYtZDhOn9s1ghJVGgv68pe1I0Yd-LswBnWUE8arOYc-1s9q9RAHPediyIFNP2jaolm1DEiddKk_cBKSn9tB4aGhtmewlaHMt8ya6Cw"
+          alt="Logo Meera Coffee"
+          class="sidebar-logo"
+        >
+        <div>
+          <h1 class="sidebar-title">Meera Coffee</h1>
+          <span class="sidebar-subtitle">Dashboard Penjual</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button type="button" class="sidebar-nav-btn active" data-view="orders-view">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+            <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+            <line x1="9" y1="12" x2="15" y2="12"></line>
+            <line x1="9" y1="16" x2="13" y2="16"></line>
+          </svg>
+          <span>Pesanan Masuk</span>
+          <span id="nav-badge-new" class="nav-pill-badge">0</span>
+        </button>
+
+        <button type="button" class="sidebar-nav-btn" data-view="history-view">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span>Riwayat &amp; Penjualan</span>
+        </button>
+
+        <button type="button" class="sidebar-nav-btn" data-view="deploys-view">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+            <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+          </svg>
+          <span>Deploys</span>
+          <span id="nav-badge-deploys" class="nav-pill-badge nav-pill-badge-soft">0</span>
+        </button>
+      </nav>
+
+      <!-- Alur Status Panduan Cepat -->
+      <div class="sidebar-workflow-card">
+        <h4>Alur Status Barista</h4>
+        <ol class="workflow-steps-list">
+          <li><span class="dot dot-baru"></span><strong>Pesanan Baru</strong> — Masuk dari pembeli</li>
+          <li><span class="dot dot-diproses"></span><strong>Diproses</strong> — Diterima &amp; diseduh</li>
+          <li><span class="dot dot-siap"></span><strong>Siap Diambil</strong> — Siap diantar/diambil</li>
+          <li><span class="dot dot-selesai"></span><strong>Selesai</strong> — Transaksi tuntas</li>
+        </ol>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="admin-profile-chip">
+          <div class="admin-avatar">MC</div>
+          <div class="admin-profile-meta">
+            <strong>Admin Meera Coffee</strong>
+            <span>Akses langsung · tanpa login</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Area Konten Utama -->
+    <div class="dashboard-main">
+      <!-- Topbar Operasional -->
+      <header class="dashboard-topbar">
+        <div class="topbar-left">
+          <div class="live-status-pill" id="live-sync-indicator">
+            <span class="pulse-dot"></span>
+            <span id="live-sync-text">Real-Time Aktif</span>
+          </div>
+          <span class="last-sync-label" id="last-sync-time">Sinkronisasi otomatis</span>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Tombol Opsional Suara Notifikasi -->
+          <div class="sound-control-group">
+            <button
+              type="button"
+              id="sound-toggle-btn"
+              class="btn-toolbar active"
+              aria-pressed="true"
+              title="Aktifkan atau matikan suara notifikasi saat pesanan baru masuk"
+            >
+              <svg id="sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg id="sound-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" hidden>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <span id="sound-toggle-label">Suara: Aktif</span>
+            </button>
+            <button type="button" id="test-sound-btn" class="btn-toolbar-icon" title="Uji Suara Lonceng Notifikasi">
+              Uji Nada
+            </button>
+          </div>
+
+          <button type="button" id="manual-refresh-btn" class="btn-toolbar" title="Muat ulang data pesanan sekarang">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>Segarkan</span>
+          </button>
+
+          <a href="../index.html" target="_blank" rel="noopener noreferrer" class="btn-toolbar btn-toolbar-accent">
+            <span>Lihat Web Pembeli</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <!-- Banner Notifikasi Visual Pesanan Baru -->
+      <div id="new-order-banner" class="new-order-banner" hidden role="status" aria-live="polite">
+        <div class="new-order-banner-content">
+          <span class="banner-bell-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </span>
+          <div>
+            <strong id="new-order-banner-title">Pesanan Baru Masuk!</strong>
+            <p id="new-order-banner-desc">Segera terima pesanan untuk mulai menyiapkan minuman.</p>
+          </div>
+        </div>
+        <div class="new-order-banner-actions">
+          <button type="button" id="banner-show-new-btn" class="btn-banner-action">Tampilkan Pesanan Baru</button>
+          <button type="button" id="banner-dismiss-btn" class="btn-banner-close" aria-label="Tutup Notifikasi">×</button>
+        </div>
+      </div>
+
+      <!-- Ringkasan Statistik Utama (4 Kartu KPI) -->
+      <section id="kpi-summary" class="kpi-summary-grid" aria-label="Ringkasan Pesanan dan Penjualan">
+        <article class="kpi-card kpi-card-new" data-quick-status="Baru">
+          <div class="kpi-card-top">
+            <span class="kpi-label">Pesanan Baru</span>
+            <span class="kpi-icon kpi-icon-new">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="kpi-value" id="stat-baru-count">0</div>
+          <p class="kpi-foot" id="stat-baru-foot">Menunggu konfirmasi barista</p>
+        </article>
+
+        <article class="kpi-card kpi-card-process" data-quick-status="Diproses">
+          <div class="kpi-card-top">
+            <span class="kpi-label">Pesanan Diproses</span>
+            <span class="kpi-icon kpi-icon-process">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </span>
+          </div>
+          <div class="kpi-value" id="stat-diproses-count">0</div>
+          <p class="kpi-foot" id="stat-diproses-foot">0 diseduh · 0 siap diambil</p>
+        </article>
+
+        <article class="kpi-card kpi-card-done" data-quick-status="Selesai">
+          <div class="kpi-card-top">
+            <span class="kpi-label">Pesanan Selesai</span>
+            <span class="kpi-icon kpi-icon-done">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </span>
+          </div>
+          <div class="kpi-value" id="stat-selesai-count">0</div>
+          <p class="kpi-foot" id="stat-selesai-foot">Total transaksi tuntas</p>
+        </article>
+
+        <article class="kpi-card kpi-card-revenue">
+          <div class="kpi-card-top">
+            <span class="kpi-label">Total Penjualan</span>
+            <span class="kpi-icon kpi-icon-revenue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="kpi-value kpi-value-currency" id="stat-total-revenue">Rp 0</div>
+          <p class="kpi-foot" id="stat-revenue-foot">Dari 0 total pesanan masuk</p>
+        </article>
+      </section>
+
+      <!-- Bar Kontrol Filter Status, Tanggal, dan Pencarian -->
+      <section id="filter-bar" class="filter-control-bar" aria-label="Filter dan Pencarian Pesanan">
+        <div class="status-filter-tabs" role="tablist" aria-label="Filter Status Pesanan">
+          <button type="button" class="status-pill active" data-status="ALL">
+            <span>Semua</span>
+            <span class="pill-count" id="count-all">0</span>
+          </button>
+          <button type="button" class="status-pill" data-status="Baru">
+            <span class="status-dot dot-baru"></span>
+            <span>Pesanan Baru</span>
+            <span class="pill-count" id="count-baru">0</span>
+          </button>
+          <button type="button" class="status-pill" data-status="Diproses">
+            <span class="status-dot dot-diproses"></span>
+            <span>Diproses</span>
+            <span class="pill-count" id="count-diproses">0</span>
+          </button>
+          <button type="button" class="status-pill" data-status="Siap Diambil">
+            <span class="status-dot dot-siap"></span>
+            <span>Siap Diambil</span>
+            <span class="pill-count" id="count-siap">0</span>
+          </button>
+          <button type="button" class="status-pill" data-status="Selesai">
+            <span class="status-dot dot-selesai"></span>
+            <span>Selesai</span>
+            <span class="pill-count" id="count-selesai">0</span>
+          </button>
+        </div>
+
+        <div class="search-date-controls">
+          <!-- Input Pencarian Nomor Pesanan atau Nama Pelanggan -->
+          <div class="search-input-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="search-order-input"
+              placeholder="Cari nomor pesanan (mis. 12) atau nama pembeli..."
+              aria-label="Cari nomor pesanan atau nama pelanggan"
+            >
+            <button type="button" id="clear-search-btn" class="btn-clear-search" hidden aria-label="Hapus pencarian">×</button>
+          </div>
+
+          <!-- Filter Tanggal -->
+          <div class="date-filter-box">
+            <select id="date-preset-select" aria-label="Rentang Tanggal Pesanan">
+              <option value="ALL">Semua Tanggal</option>
+              <option value="TODAY">Hari Ini</option>
+              <option value="YESTERDAY">Kemarin</option>
+              <option value="LAST_7_DAYS">7 Hari Terakhir</option>
+              <option value="CUSTOM">Pilih Tanggal...</option>
+            </select>
+            <input
+              type="date"
+              id="custom-date-input"
+              class="custom-date-input"
+              hidden
+              aria-label="Pilih Tanggal Spesifik"
+            >
+            <button type="button" id="reset-filters-btn" class="btn-reset-filter" title="Atur ulang semua filter">
+              Reset Filter
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 1: DAFTAR PESANAN MASUK REAL-TIME (BARISTA QUEUE)
+           ==================================================================== -->
+      <section id="orders-view" class="dashboard-view active-view" aria-label="Daftar Pesanan Masuk">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Antrean &amp; Daftar Pesanan</h2>
+            <p class="section-subtitle" id="orders-showing-text">Menampilkan seluruh pesanan secara real-time</p>
+            <p class="section-subtitle">Nomor pesanan = urutan pesanan hari ini. Data pesanan direset otomatis setiap hari pukul 00:00 WIB.</p>
+          </div>
+        </div>
+
+        <!-- Tampilan Kosong Informatif (Empty State) -->
+        <div id="orders-empty-state" class="empty-orders-card" hidden>
+          <div class="empty-illustration">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" y1="2" x2="6" y2="4"></line>
+              <line x1="10" y1="2" x2="10" y2="4"></line>
+              <line x1="14" y1="2" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <h3 id="empty-state-title">Belum Ada Pesanan Masuk</h3>
+          <p id="empty-state-desc">
+            Saat pelanggan mengonfirmasi pesanan di halaman katalog Meera Coffee, pesanan akan otomatis muncul di layar ini secara real-time tanpa perlu memuat ulang halaman.
+          </p>
+          <div class="empty-state-actions">
+            <button type="button" id="empty-reset-filter-btn" class="btn-secondary-action" hidden>
+              Tampilkan Semua Pesanan
+            </button>
+            <a href="../index.html" target="_blank" rel="noopener noreferrer" class="btn-primary-action">
+              Buka Website Pembeli
+            </a>
+          </div>
+        </div>
+
+        <!-- Grid Kartu Pesanan -->
+        <div id="orders-grid" class="orders-grid"></div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 2: RIWAYAT TRANSAKSI & RINGKASAN PENJUALAN
+           ==================================================================== -->
+      <section id="history-view" class="dashboard-view" hidden aria-label="Riwayat Transaksi dan Ringkasan Penjualan">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Riwayat Transaksi &amp; Ringkasan Penjualan</h2>
+            <p class="section-subtitle">Analisis performa penjualan, metode pembayaran, dan rincian transaksi sesuai filter aktif.</p>
+          </div>
+          <button type="button" id="export-csv-btn" class="btn-toolbar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Unduh Laporan CSV</span>
+          </button>
+        </div>
+
+        <!-- Panel Ringkasan Analitik Penjualan -->
+        <div class="analytics-grid">
+          <div class="analytics-card">
+            <div class="analytics-card-header">
+              <h3>Ringkasan Nilai Penjualan</h3>
+              <span class="analytics-badge" id="analytics-period-label">Sesuai Filter</span>
+            </div>
+            <div class="sales-metrics-list">
+              <div class="sales-metric-item">
+                <span>Total Omzet Kotor (Semua Status)</span>
+                <strong id="report-gross-sales">Rp 0</strong>
+              </div>
+              <div class="sales-metric-item">
+                <span>Penjualan Selesai (Tuntas)</span>
+                <strong id="report-completed-sales" class="text-green">Rp 0</strong>
+              </div>
+              <div class="sales-metric-item">
+                <span>Pesanan Sedang Berjalan (Baru/Diproses/Siap)</span>
+                <strong id="report-active-sales">Rp 0</strong>
+              </div>
+              <div class="sales-metric-item">
+                <span>Total Gelas / Item Terjual</span>
+                <strong id="report-total-cups">0 Cup</strong>
+              </div>
+              <div class="sales-metric-item">
+                <span>Rata-rata Nilai per Pesanan (AOV)</span>
+                <strong id="report-avg-order">Rp 0</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="analytics-card">
+            <div class="analytics-card-header">
+              <h3>Rincian Metode Pembayaran</h3>
+              <span class="analytics-badge">Distribusi</span>
+            </div>
+            <div id="payment-breakdown-list" class="breakdown-list"></div>
+          </div>
+
+          <div class="analytics-card">
+            <div class="analytics-card-header">
+              <h3>Menu Terlaris</h3>
+              <span class="analytics-badge">Top Menu</span>
+            </div>
+            <div id="top-menu-list" class="breakdown-list"></div>
+          </div>
+        </div>
+
+        <!-- Tabel Riwayat Transaksi -->
+        <div class="history-table-card">
+          <div class="history-table-header">
+            <h3>Daftar Riwayat Transaksi</h3>
+            <span id="history-count-label">0 transaksi</span>
+          </div>
+          <div class="table-responsive">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>No. Pesanan</th>
+                  <th>Waktu Masuk</th>
+                  <th>Pelanggan &amp; Catatan</th>
+                  <th>Rincian Menu &amp; Jumlah</th>
+                  <th>Metode Bayar</th>
+                  <th>Total Harga</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 3: DEPLOYS — RIWAYAT RILIS WEBSITE
+           ==================================================================== -->
+      <section id="deploys-view" class="dashboard-view" hidden aria-label="Deploys dan Riwayat Rilis">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Deploys &amp; Riwayat Rilis</h2>
+            <p class="section-subtitle">Catatan setiap rilis website Meera Coffee: versi, lingkungan, status, dan commit.</p>
+          </div>
+          <button type="button" id="toggle-deploy-form-btn" class="btn-toolbar btn-toolbar-accent" aria-expanded="false" aria-controls="deploy-form">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Catat Deploy</span>
+          </button>
+        </div>
+
+        <!-- Form catat deploy manual -->
+        <form id="deploy-form" class="deploy-form-card" hidden novalidate>
+          <div class="deploy-form-grid">
+            <div class="form-field">
+              <label for="deploy-version">Versi / Nama Rilis *</label>
+              <input type="text" id="deploy-version" maxlength="40" placeholder="mis. v1.4.0" required>
+            </div>
+            <div class="form-field">
+              <label for="deploy-environment">Lingkungan</label>
+              <select id="deploy-environment">
+                <option value="Production">Production</option>
+                <option value="Preview">Preview</option>
+                <option value="Development">Development</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="deploy-status">Status</label>
+              <select id="deploy-status">
+                <option value="Berhasil">Berhasil</option>
+                <option value="Sedang Berjalan">Sedang Berjalan</option>
+                <option value="Gagal">Gagal</option>
+                <option value="Dibatalkan">Dibatalkan</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="deploy-branch">Branch</label>
+              <input type="text" id="deploy-branch" maxlength="100" placeholder="main" value="main">
+            </div>
+            <div class="form-field form-field-wide">
+              <label for="deploy-message">Catatan Rilis / Pesan Commit</label>
+              <input type="text" id="deploy-message" maxlength="300" placeholder="Apa yang berubah di rilis ini?">
+            </div>
+            <div class="form-field">
+              <label for="deploy-by">Dirilis Oleh</label>
+              <input type="text" id="deploy-by" maxlength="100" placeholder="Nama">
+            </div>
+            <div class="form-field">
+              <label for="deploy-duration">Durasi (detik)</label>
+              <input type="number" id="deploy-duration" min="0" max="86400" step="1" placeholder="opsional">
+            </div>
+            <div class="form-field form-field-wide">
+              <label for="deploy-url">URL Deployment</label>
+              <input type="url" id="deploy-url" maxlength="300" placeholder="https://meeracoffe.vercel.app (opsional)">
+            </div>
+          </div>
+          <div id="deploy-form-error" class="deploy-form-error" hidden role="alert"></div>
+          <div class="deploy-form-actions">
+            <button type="submit" id="deploy-submit-btn" class="btn-primary-action">Simpan Deploy</button>
+            <button type="button" id="deploy-cancel-btn" class="btn-secondary-action">Batal</button>
+          </div>
+        </form>
+
+        <!-- Deployment yang sedang berjalan -->
+        <div id="deploy-current-card" class="deploy-current-card"></div>
+
+        <!-- Ringkasan -->
+        <div class="deploy-stat-grid">
+          <div class="deploy-stat">
+            <span class="deploy-stat-label">Total Deploy</span>
+            <strong class="deploy-stat-value" id="deploy-stat-total">0</strong>
+            <span class="deploy-stat-foot" id="deploy-stat-prod">0 ke Production</span>
+          </div>
+          <div class="deploy-stat">
+            <span class="deploy-stat-label">Berhasil</span>
+            <strong class="deploy-stat-value text-green" id="deploy-stat-success">0</strong>
+            <span class="deploy-stat-foot" id="deploy-stat-rate">Tingkat keberhasilan -</span>
+          </div>
+          <div class="deploy-stat">
+            <span class="deploy-stat-label">Gagal</span>
+            <strong class="deploy-stat-value" id="deploy-stat-failed">0</strong>
+            <span class="deploy-stat-foot">Perlu dicek ulang</span>
+          </div>
+          <div class="deploy-stat">
+            <span class="deploy-stat-label">Deploy Terakhir</span>
+            <strong class="deploy-stat-value deploy-stat-value-sm" id="deploy-stat-last">-</strong>
+            <span class="deploy-stat-foot" id="deploy-stat-last-foot">Belum ada data</span>
+          </div>
+        </div>
+
+        <!-- Tabel riwayat deploy -->
+        <div class="history-table-card">
+          <div class="history-table-header">
+            <h3>Riwayat Deploy</h3>
+            <span id="deploy-count-label">0 deploy</span>
+          </div>
+          <div class="table-responsive">
+            <table class="history-table deploy-table">
+              <thead>
+                <tr>
+                  <th>Versi</th>
+                  <th>Waktu</th>
+                  <th>Lingkungan</th>
+                  <th>Status</th>
+                  <th>Commit &amp; Branch</th>
+                  <th>Dirilis Oleh</th>
+                  <th>Durasi</th>
+                  <th>Sumber</th>
+                </tr>
+              </thead>
+              <tbody id="deploy-table-body"></tbody>
+            </table>
+          </div>
+          <p class="deploy-note">
+            Deploy dari Vercel tercatat otomatis. Baris bertanda <strong>Data Awal</strong> adalah contoh bawaan;
+            gunakan <strong>Catat Deploy</strong> untuk menambah catatan rilis sendiri.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Modal Struk / Detail Pesanan -->
+  <div id="receipt-modal-overlay" class="modal-overlay" hidden>
+    <div class="receipt-modal" role="dialog" aria-modal="true" aria-labelledby="receipt-modal-title">
+      <div class="receipt-modal-header">
+        <h3 id="receipt-modal-title">Detail &amp; Struk Pesanan</h3>
+        <button type="button" id="close-receipt-modal-btn" class="btn-modal-close" aria-label="Tutup">×</button>
+      </div>
+      <div id="receipt-modal-body" class="receipt-modal-body"></div>
+      <div class="receipt-modal-footer">
+        <button type="button" id="print-receipt-btn" class="btn-primary-action">Cetak Struk</button>
+        <button type="button" id="close-receipt-footer-btn" class="btn-secondary-action">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Stack Container -->
+  <div id="admin-toast-container" class="admin-toast-container" aria-live="polite"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
