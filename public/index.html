@@ -408,6 +408,22 @@
     <span>✅</span> <span id="toast-text">Ditambahkan ke pesanan!</span>
   </div>
 
+  <!-- Dialog Kustom (pengganti alert/confirm bawaan browser) -->
+  <div id="meera-dialog" class="meera-dialog" hidden>
+    <div class="meera-dialog__backdrop" data-dialog-close></div>
+    <div class="meera-dialog__box" role="alertdialog" aria-modal="true"
+         aria-labelledby="meera-dialog-title" aria-describedby="meera-dialog-message">
+      <div class="meera-dialog__icon" id="meera-dialog-icon" aria-hidden="true"></div>
+      <h3 class="meera-dialog__title" id="meera-dialog-title"></h3>
+      <p class="meera-dialog__message" id="meera-dialog-message"></p>
+      <dl class="meera-dialog__details" id="meera-dialog-details" hidden></dl>
+      <div class="meera-dialog__actions">
+        <button type="button" class="meera-dialog__btn meera-dialog__btn--ghost" id="meera-dialog-cancel" hidden>Batal</button>
+        <button type="button" class="meera-dialog__btn meera-dialog__btn--primary" id="meera-dialog-ok">Mengerti</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
