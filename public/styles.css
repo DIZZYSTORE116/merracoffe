@@ -519,6 +519,35 @@ button {
   color: var(--color-text-muted);
 }
 
+/* Detail pesanan (data pemesan, pembayaran, ringkasan, tombol konfirmasi)
+   baru muncul setelah ada menu yang dipilih (kelas .has-items diatur script.js) */
+#cart-drawer:not(.has-items) .form-card,
+#cart-drawer:not(.has-items) .drawer-footer {
+  display: none;
+}
+
+#cart-drawer.has-items .form-card,
+#cart-drawer.has-items .drawer-footer {
+  animation: detail-in 0.4s ease both;
+}
+
+#cart-drawer.has-items .drawer-body > .form-card:nth-of-type(1) { animation-delay: 0.05s; }
+#cart-drawer.has-items .drawer-body > .form-card:nth-of-type(2) { animation-delay: 0.12s; }
+#cart-drawer.has-items .drawer-body > .form-card:nth-of-type(3) { animation-delay: 0.19s; }
+#cart-drawer.has-items .drawer-footer { animation-delay: 0.25s; }
+
+@keyframes detail-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #floating-cart-bar,
+  #floating-cart-bar.is-visible { transition: none; }
+  #cart-drawer.has-items .form-card,
+  #cart-drawer.has-items .drawer-footer { animation: none; }
+}
+
 /* ==========================================================================
    6. FLOATING CART BAR & TOAST
    ========================================================================== */
@@ -526,7 +555,6 @@ button {
   position: fixed;
   bottom: 1.25rem;
   left: 50%;
-  transform: translateX(-50%);
   width: calc(100% - 2.5rem);
   max-width: 540px;
   background: #43241a;
@@ -539,6 +567,21 @@ button {
   justify-content: space-between;
   z-index: 90;
   cursor: pointer;
+
+  /* Tersembunyi sampai ada menu yang dipilih */
+  transform: translate(-50%, 160%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.35s ease, opacity 0.25s ease, visibility 0s linear 0.35s;
+}
+
+#floating-cart-bar.is-visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.35s ease, opacity 0.25s ease, visibility 0s;
 }
 
 .floating-cart-info {
