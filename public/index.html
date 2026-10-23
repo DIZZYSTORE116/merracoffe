@@ -9,6 +9,89 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Lokasi Google Maps (footer) */
+    .footer-location {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .footer-location-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #8c8c8c;
+    }
+    .footer-location-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--mc-pure-white);
+      letter-spacing: -0.02em;
+      margin: 0.35rem 0 0.75rem;
+    }
+    .footer-location-address {
+      font-style: normal;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #b8b8b8;
+      margin-bottom: 1.25rem;
+    }
+    .footer-map {
+      width: 100%;
+      height: 18rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--mc-charcoal-border);
+      overflow: hidden;
+      background: var(--mc-charcoal);
+    }
+    .footer-map iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    @media (min-width: 48rem) {
+      .footer-location {
+        grid-template-columns: 1fr 1.7fr;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .footer-map { height: 21rem; }
+    }
+
+    /* Tombol Instagram bergaya brand Instagram (hanya di blok "Ikuti Kami di Instagram") */
+    .footer-social {
+      --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .footer-social .btn-ig {
+      background: var(--ig-gradient);
+      border: 1px solid transparent;
+      color: #ffffff;
+      padding: 0.6rem 1.4rem;
+      box-shadow: 0 6px 18px rgba(220, 39, 67, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .footer-social .btn-ig svg {
+      width: 18px;
+      height: 18px;
+    }
+    .footer-social .btn-ig span {
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: #ffffff;
+    }
+    .footer-social .btn-ig:hover {
+      background: var(--ig-gradient);
+      border-color: transparent;
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 0 10px 24px rgba(220, 39, 67, 0.38);
+    }
+  </style>
 </head>
 <body>
 
@@ -327,6 +410,28 @@
             </svg>
             <span>@meeracoffee24</span>
           </a>
+        </div>
+      </div>
+      <div class="footer-location" id="lokasi">
+        <div class="footer-location-info">
+          <span class="footer-location-label">Lokasi Kami</span>
+          <h3 class="footer-location-title">Kunjungi Meera Coffee</h3>
+          <address class="footer-location-address">Jl. Cipulir 1 No.2, RT.14/RW.4, Cipulir, Kec. Kebayoran Lama, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12230</address>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Jl.+Cipulir+1+No.2%2C+RT.14%2FRW.4%2C+Cipulir%2C+Kec.+Kebayoran+Lama%2C+Kota+Jakarta+Selatan%2C+Daerah+Khusus+Ibukota+Jakarta+12230" target="_blank" rel="noopener noreferrer" class="btn-ig">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Buka di Google Maps</span>
+          </a>
+        </div>
+        <div class="footer-map">
+          <iframe
+            title="Lokasi Meera Coffee di Google Maps"
+            src="https://maps.google.com/maps?q=Jl.+Cipulir+1+No.2%2C+RT.14%2FRW.4%2C+Cipulir%2C+Kec.+Kebayoran+Lama%2C+Kota+Jakarta+Selatan%2C+Daerah+Khusus+Ibukota+Jakarta+12230&amp;z=17&amp;hl=id&amp;output=embed"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
       <div class="footer-bottom">
