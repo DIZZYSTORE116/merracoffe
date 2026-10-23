@@ -77,7 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderCart();
     showToast(`"${name}" ditambahkan ke pesanan!`);
-    openCartDrawer();
+    // Panel keranjang TIDAK dibuka otomatis; baru terbuka saat tombol
+    // "Pesanan" (header) atau "Lihat Pesanan" (bar melayang) ditekan.
   };
 
   function renderCart() {
