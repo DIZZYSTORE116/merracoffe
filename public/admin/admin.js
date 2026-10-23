@@ -381,20 +381,38 @@
     });
   }
 
+  // Total penjualan dari pesanan yang sudah diterima (status bukan "Baru")
+  function getAcceptedRevenue() {
+    return allOrders.reduce(
+      (sum, ord) => (ord.status === 'Baru' ? sum : sum + (Number(ord.totalAmount) || 0)),
+      0
+    );
+  }
+
   function renderAll() {
     // Calculate global and date-scoped counts
     let baruCount = 0;
     let diprosesCount = 0;
     let siapCount = 0;
     let selesaiCount = 0;
-    let totalRevenue = 0;
+    let totalRevenue = 0; // Total Penjualan = hanya pesanan yang sudah DITERIMA (status bukan "Baru")
     let completedRevenue = 0;
+    let pendingRevenue = 0; // nilai pesanan baru yang belum diterima
+    let acceptedCount = 0;
 
     allOrders.forEach(ord => {
       const amount = Number(ord.totalAmount) || 0;
+
+      if (ord.status === 'Baru') {
+        baruCount++;
+        pendingRevenue += amount;
+        return; // belum diterima -> belum masuk Total Penjualan
+      }
+
+      // Status selain "Baru" = sudah diterima admin -> masuk Total Penjualan
       totalRevenue += amount;
-      if (ord.status === 'Baru') baruCount++;
-      else if (ord.status === 'Diproses') diprosesCount++;
+      acceptedCount++;
+      if (ord.status === 'Diproses') diprosesCount++;
       else if (ord.status === 'Siap Diambil') siapCount++;
       else if (ord.status === 'Selesai') {
         selesaiCount++;
@@ -425,7 +443,10 @@
 
     if (statTotalRevenue) statTotalRevenue.textContent = formatRupiah(totalRevenue);
     if (statRevenueFoot) {
-      statRevenueFoot.textContent = `Dari ${allOrders.length} total pesanan masuk`;
+      statRevenueFoot.textContent =
+        pendingRevenue > 0
+          ? `Dari ${acceptedCount} pesanan diterima · ${formatRupiah(pendingRevenue)} menunggu diterima`
+          : `Dari ${acceptedCount} pesanan diterima`;
     }
 
     // Update Badges
@@ -806,14 +827,23 @@
 
       // Update local state immediately
       const idx = allOrders.findIndex(o => Number(o.id) === numericId);
+      const prevStatus = idx > -1 ? allOrders[idx].status : null;
       if (idx > -1) {
         allOrders[idx] = data.order;
       }
 
       renderAll();
-      showToast(
-        `Status pesanan #${data.order.orderNumber} diperbarui ke "${statusDisplayLabel(data.order.status)}".`
-      );
+
+      if (prevStatus === 'Baru' && data.order.status !== 'Baru') {
+        // Pesanan baru diterima -> Total Penjualan langsung bertambah
+        showToast(
+          `Pesanan #${data.order.orderNumber} diterima. Total Penjualan +${formatRupiah(data.order.totalAmount)} → ${formatRupiah(getAcceptedRevenue())}`
+        );
+      } else {
+        showToast(
+          `Status pesanan #${data.order.orderNumber} diperbarui ke "${statusDisplayLabel(data.order.status)}".`
+        );
+      }
     } catch (err) {
       showToast(err.message || 'Gagal memperbarui status pesanan.');
       renderAll();
