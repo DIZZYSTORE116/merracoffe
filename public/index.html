@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Meera Coffee</title>
+  <title>Meera Coffee — Artisan Coffee &amp; Brews</title>
+  <meta name="description" content="Nikmati kopi artisan pilihan dan racikan minuman segar dari Meera Coffee. Pesan langsung dengan mudah dan cepat.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,13 +17,19 @@
     <div class="container nav-wrapper">
       <a aria-label="Meera Coffee Beranda" class="brand-logo" href="#">
         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZfnvPM9DEH76M1lpQmup1-hyheLau6ORiGJMQpf4iYSnYZf3rU9p8TTDeDiBpKEZgmeGUtNtaXgf_X3afsQD7brOoE1OTjRubYvuaSvUA_1Z2tZy03J-_u-d2LPFw1QAaw0fRJeyhanPC3FOVdtJ0Yke8ea5FZYtZDhOn9s1ghJVGgv68pe1I0Yd-LswBnWUE8arOYc-1s9q9RAHPediyIFNP2jaolm1DEiddKk_cBKSn9tB4aGhtmewlaHMt8ya6Cw" alt="Meera Coffee Logo" class="brand-img">
-        <div>
+        <div class="brand-info">
           <span class="brand-title">Meera Coffee</span>
+          <span class="brand-tagline">Artisan Coffee &amp; Brews</span>
         </div>
       </a>
       
       <nav aria-label="Navigasi Utama">
         <ul class="nav-menu">
+          <li>
+            <a class="nav-link" href="#katalog">
+              <span>Daftar Menu</span>
+            </a>
+          </li>
           <li>
             <a class="nav-link" href="https://www.instagram.com/meeracoffee24" target="_blank" rel="noopener noreferrer">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,17 +45,59 @@
 
       <div class="nav-actions">
         <button aria-label="Buka Keranjang Belanja" class="btn-cart">
-          🛒 <span>Pesanan</span>
+          <svg class="cart-icon-svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Pesanan</span>
           <span class="cart-badge" id="header-cart-count">0</span>
         </button>
       </div>
     </div>
   </header>
 
+  <!-- Hero Section (Editorial, Minimalist, Monochrome + Warm Brown Glow) -->
+  <section class="hero-banner" aria-label="Informasi Utama Meera Coffee">
+    <div class="container hero-content">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        <span>Premium Daily Brews</span>
+      </div>
+      <h1 class="hero-title">
+        Secangkir Rasa, <span>Kualitas Tanpa Kompromi.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Biji kopi pilihan yang disangrai dengan presisi dan dipadukan bahan berkualitas tinggi untuk menghadirkan pengalaman seduhan terbaik setiap hari.
+      </p>
+      <div class="hero-features">
+        <div class="hero-feat-item">
+          <span class="hero-feat-icon">✦</span>
+          <span>100% Specialty Grade Beans</span>
+        </div>
+        <div class="hero-feat-item">
+          <span class="hero-feat-icon">✦</span>
+          <span>Freshly Crafted by Artisan Baristas</span>
+        </div>
+        <div class="hero-feat-item">
+          <span class="hero-feat-icon">✦</span>
+          <span>Pesanan Real-Time &amp; Cepat</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Konten Utama -->
   <main class="container">
-    <!-- Kontrol Filter Kategori -->
+    <!-- Kontrol Filter Kategori & Judul Bagian -->
     <div class="store-control">
+      <div class="section-intro-row">
+        <div>
+          <h2 class="section-heading-title">Katalog Minuman Pilihan</h2>
+          <p class="section-heading-desc">Pilih menu favorit Anda dan konfirmasi pesanan langsung ke barista.</p>
+        </div>
+      </div>
+
       <div aria-label="Filter Kategori Menu" class="category-scroll" role="tablist">
         <button aria-selected="true" class="chip-btn active" data-category="all" role="tab">Semua Menu</button>
         <button aria-selected="false" class="chip-btn" data-category="coffee" role="tab">Coffee</button>
@@ -60,8 +109,8 @@
     <section aria-label="Katalog Minuman Meera Coffee" id="katalog">
       <div id="empty-search-state">
         <span class="empty-icon">☕</span>
-        <h4>Menu Tidak Ditemukan</h4>
-        <p>Coba pilih kategori menu lainnya.</p>
+        <h4 style="font-family:var(--font-display); font-size:1.15rem; font-weight:700; color:var(--mc-jet-black);">Menu Tidak Ditemukan</h4>
+        <p style="font-size:0.875rem; color:var(--color-text-muted); margin-top:0.35rem;">Coba pilih kategori menu lainnya di atas.</p>
       </div>
 
       <div class="product-grid" id="product-grid-container">
@@ -69,7 +118,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIYPD6nY-xFo3NveydG-Gsbo0CdCQbVxXKFpxFurcNk8xHZ4v_JMn_PzRFzk0NoOGBmdIpHW_-6JKSTfdoSHBhqP9eODU4VkGNTy3y4FVa1siVTdZnjGpeBeY7C_fc6Y6ouqua8op1x2oBrCUt7oAcntLoYYXKYC_sYGnwABVyGn25B6cWkUbjEqoP_6ZvnHCPGK6Ga3zfaLsN8jVNUiX5RAzEKVQDUgayZtcxfwuPQq-baNoGqb79BFc2RcbL_DerMQ" alt="Ice Americano">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIYPD6nY-xFo3NveydG-Gsbo0CdCQbVxXKFpxFurcNk8xHZ4v_JMn_PzRFzk0NoOGBmdIpHW_-6JKSTfdoSHBhqP9eODU4VkGNTy3y4FVa1siVTdZnjGpeBeY7C_fc6Y6ouqua8op1x2oBrCUt7oAcntLoYYXKYC_sYGnwABVyGn25B6cWkUbjEqoP_6ZvnHCPGK6Ga3zfaLsN8jVNUiX5RAzEKVQDUgayZtcxfwuPQq-baNoGqb79BFc2RcbL_DerMQ" alt="Ice Americano" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Artisan Pick</span>
@@ -88,7 +137,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzs1BbUw3RpT_cioJOi3Xdfpb5Ho85bnxg1W7Qi5mSXExhj7ZeI5vBeZe1fUmf_28O2otUXMxjjzV6ctQBXe5L7AolOMn_EjTWj9GhDF6MZen-6ja6ceY4CJTy3SGm29e3J5Bv2Kn762dBRHn24rklenm0MpkvMi4HuSA24ZtITZrgknVVCYIwyegDnz55tL5PVCPGJBbCLdwKRIDHU8LBwL7ofciLM6o4XiNjPzWNsHazKCxoQHXbMBNaDLU24kNbwQ" alt="Ice Cappuccino">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzs1BbUw3RpT_cioJOi3Xdfpb5Ho85bnxg1W7Qi5mSXExhj7ZeI5vBeZe1fUmf_28O2otUXMxjjzV6ctQBXe5L7AolOMn_EjTWj9GhDF6MZen-6ja6ceY4CJTy3SGm29e3J5Bv2Kn762dBRHn24rklenm0MpkvMi4HuSA24ZtITZrgknVVCYIwyegDnz55tL5PVCPGJBbCLdwKRIDHU8LBwL7ofciLM6o4XiNjPzWNsHazKCxoQHXbMBNaDLU24kNbwQ" alt="Ice Cappuccino" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Best Seller</span>
@@ -107,7 +156,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzJ413k6T2pXQa7Oeq6JpSIq8EHpGBcmWetm2f1Z4e94kgXBggIRECLb58zqxS2jh65Y-aJ_YM_Ax4ddgFH44Jpun1aQTqiEb0igbO470DBBC9GZPhnDuVVwffCg38IIMx8dH1MqpfD2jBDJZp5HgRA2ANzzP46Id8v4LpxdtKyxUDoVufE1KXcak1Qj1BeKPeg1vsxSdZmNaV7hKXZeEvV2pTgp2A3iOV13oJl727Ub54I2y89bniiIOjnP7hLc8h_Q" alt="Ice Salted Caramel">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzJ413k6T2pXQa7Oeq6JpSIq8EHpGBcmWetm2f1Z4e94kgXBggIRECLb58zqxS2jh65Y-aJ_YM_Ax4ddgFH44Jpun1aQTqiEb0igbO470DBBC9GZPhnDuVVwffCg38IIMx8dH1MqpfD2jBDJZp5HgRA2ANzzP46Id8v4LpxdtKyxUDoVufE1KXcak1Qj1BeKPeg1vsxSdZmNaV7hKXZeEvV2pTgp2A3iOV13oJl727Ub54I2y89bniiIOjnP7hLc8h_Q" alt="Ice Salted Caramel" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Best Seller</span>
@@ -126,7 +175,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsLtevaNotPbW3Tx6S-oLIj2nZwS8N_XxmmHyJY7SO4PrJTcPdrYJB_TsR6mxhySF63ECitYaRV7rpgKbUZxL5Wiv3D3NNpkfGap_TbEixrkqV63WEDN-bxhB8z_vgxmNE82q1hVslhPcvpjfS_OhqAdisFsnLQZthFliVrX5v6xFzP9H_2tyvzdtOLSp1wDRwi07pB1c8YUC_Th4D9NlftfWodR9dAUFRdgtTNE8oCGUhdZb4UCxoKXjG5Fi98J-CpQ" alt="Ice Coffee Gula Aren">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsLtevaNotPbW3Tx6S-oLIj2nZwS8N_XxmmHyJY7SO4PrJTcPdrYJB_TsR6mxhySF63ECitYaRV7rpgKbUZxL5Wiv3D3NNpkfGap_TbEixrkqV63WEDN-bxhB8z_vgxmNE82q1hVslhPcvpjfS_OhqAdisFsnLQZthFliVrX5v6xFzP9H_2tyvzdtOLSp1wDRwi07pB1c8YUC_Th4D9NlftfWodR9dAUFRdgtTNE8oCGUhdZb4UCxoKXjG5Fi98J-CpQ" alt="Ice Coffee Gula Aren" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Favorite</span>
@@ -145,7 +194,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraaMALRMZmHYZGtE0bH4Sn72l51guHdE8FoEnZYwQsACEslTeZCunA8n59icc0ULyrVms1YHjm5fU9FhR6m16kFLu_U0dzbe7ENbYfzFNeDodslYW4YQtmlQ3ZTioqsHwv29IQwIP5iJkaft_eN0mKSaLYoSsKB6CJgIhR-10VdcAbKnVMPdme9QjibuXA0y6sJq6eynTJhtugJJ8cH3X-fKKRBoSmgwMp58rwXRf-jMMx3x00Qv1jcdkVkl9KO-NPA" alt="Ice Hazelnut Latte">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraaMALRMZmHYZGtE0bH4Sn72l51guHdE8FoEnZYwQsACEslTeZCunA8n59icc0ULyrVms1YHjm5fU9FhR6m16kFLu_U0dzbe7ENbYfzFNeDodslYW4YQtmlQ3ZTioqsHwv29IQwIP5iJkaft_eN0mKSaLYoSsKB6CJgIhR-10VdcAbKnVMPdme9QjibuXA0y6sJq6eynTJhtugJJ8cH3X-fKKRBoSmgwMp58rwXRf-jMMx3x00Qv1jcdkVkl9KO-NPA" alt="Ice Hazelnut Latte" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-category">Classic</span>
@@ -164,7 +213,7 @@
         <article class="product-card" data-category="coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYgExCJ4-wTOYcsc7Q8KUOKWIAwmLgOQ6OPNpNMobpGR-w410Gl4MHd1hXSJqp7Cc0x-sRSasav0xloEbVGkqWWf_9TRAtw2Zrw1v615BWwiobtvzeLeQ3JSsVu7puuyRnlSX5Cd0FpDFLiUTga3_RG6E9DaoZCdG8COudgoy3brfAR5s0zvxemRtxMId1PgEg_53nRT7SSd3AFWQZdoXsboosY8YhWbfAGEfELVRvga8pDua6Wcv-pcOyToXGzV_yCw" alt="Ice Milk Coffee">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYgExCJ4-wTOYcsc7Q8KUOKWIAwmLgOQ6OPNpNMobpGR-w410Gl4MHd1hXSJqp7Cc0x-sRSasav0xloEbVGkqWWf_9TRAtw2Zrw1v615BWwiobtvzeLeQ3JSsVu7puuyRnlSX5Cd0FpDFLiUTga3_RG6E9DaoZCdG8COudgoy3brfAR5s0zvxemRtxMId1PgEg_53nRT7SSd3AFWQZdoXsboosY8YhWbfAGEfELVRvga8pDua6Wcv-pcOyToXGzV_yCw" alt="Ice Milk Coffee" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-category">Classic</span>
@@ -183,7 +232,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiNHaOg-sw-GeB2qXN-9WzBmeQ30MBME4qlHyWz7CvtwaQV74uBVLbFLPoNhNisPnbhYMBCrzesM329IY3G3LHY7GD-NHIQ2qUEj5jBY0MfJdCQSR8yP_GdcRV944fAySndndY346-On7-7RqXxbGZGXu1S0Ip383Ch3yYvv8vOz8ItcnGaLHlIAr1tG0Ou-NpkbYUHlgL22S8BaQVhEi5OWv9cvjIKaNDIhem7k-Eww9fqI7toRMeIjrfmM0urJw71A" alt="Ice Pandan Latte">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiNHaOg-sw-GeB2qXN-9WzBmeQ30MBME4qlHyWz7CvtwaQV74uBVLbFLPoNhNisPnbhYMBCrzesM329IY3G3LHY7GD-NHIQ2qUEj5jBY0MfJdCQSR8yP_GdcRV944fAySndndY346-On7-7RqXxbGZGXu1S0Ip383Ch3yYvv8vOz8ItcnGaLHlIAr1tG0Ou-NpkbYUHlgL22S8BaQVhEi5OWv9cvjIKaNDIhem7k-Eww9fqI7toRMeIjrfmM0urJw71A" alt="Ice Pandan Latte" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Artisan</span>
@@ -193,7 +242,7 @@
             <p class="product-desc">Ekstrak daun pandan wangi alami berpadu lembutnya susu segar dingin yang manis harum.</p>
           </div>
           <div class="product-footer">
-            <span class="product-price">Rp10.000</span>
+            <span class="product-price">Rp 10.000</span>
             <button aria-label="Pilih Ice Pandan Latte" class="btn-add" onclick="addToCart('Ice Pandan Latte', 10000)">+ Pilih</button>
           </div>
         </article>
@@ -202,7 +251,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmjaoMYLsrhaizgmT2KV88XIZclS9jdgqmWcn0EpPdwYDz1JFwvM1wF99O7pedDaW3pNodfmSmFcJJJu0Bv0Hf5mGrBZrIfOsoXKsspIadL-N0Ez7unMy3qw1i7gPKISV5v-ravKDFhivtz7RzEDhT9FKXSCvCIY-jb7vLIT1cPA5HXIAOBWwhdhrxBoFq4f12o6CDSI1WBdqznqSVqwXj-HxDwZKhn_xbgrC2LEDHYlZyJyzOv2OGppaY18xhmwrbqg" alt="Ice Milo Shake">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmjaoMYLsrhaizgmT2KV88XIZclS9jdgqmWcn0EpPdwYDz1JFwvM1wF99O7pedDaW3pNodfmSmFcJJJu0Bv0Hf5mGrBZrIfOsoXKsspIadL-N0Ez7unMy3qw1i7gPKISV5v-ravKDFhivtz7RzEDhT9FKXSCvCIY-jb7vLIT1cPA5HXIAOBWwhdhrxBoFq4f12o6CDSI1WBdqznqSVqwXj-HxDwZKhn_xbgrC2LEDHYlZyJyzOv2OGppaY18xhmwrbqg" alt="Ice Milo Shake" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Favorit</span>
@@ -221,7 +270,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1s95-LtQnpyPYKTJdJszf9LjL9geQZ1s6zX5Xps7LO18ZznAOjq-SJdYIl2ZRF-CWW7gfnCREXOK0J9woKyqXxyxy6xR19lyz83yjGZg8lqrTDXVTHWdrF-J6J0W8_NxB5BmsqC8kQ2TI8ScxN-oW2OBZS3a1reBmazt_8enFnL0bPwpUCUOdaLxAjfjroGY9KjcruIRcwDMSeaUHAlFn4aiwVQE7U8NUOOoVgAfKhJRlpdIp8_9yG1J6sF4Mu6bpIQ" alt="Ice Brown Regal">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1s95-LtQnpyPYKTJdJszf9LjL9geQZ1s6zX5Xps7LO18ZznAOjq-SJdYIl2ZRF-CWW7gfnCREXOK0J9woKyqXxyxy6xR19lyz83yjGZg8lqrTDXVTHWdrF-J6J0W8_NxB5BmsqC8kQ2TI8ScxN-oW2OBZS3a1reBmazt_8enFnL0bPwpUCUOdaLxAjfjroGY9KjcruIRcwDMSeaUHAlFn4aiwVQE7U8NUOOoVgAfKhJRlpdIp8_9yG1J6sF4Mu6bpIQ" alt="Ice Brown Regal" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Best Seller</span>
@@ -240,7 +289,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-arqZB1UamRHWnr65O-Z12Ffqj28P9v9W38g2X79mI09gLxOsoPnXMG4wVFHEtlDnzngYAXwqt_Pkr0YstTzh31KN6-sI982gwSCggM2fhz-9xS2m9MQnLWDmsDQ7_vV30qovOt78cOfK0659L6hrYKGCfMTcf5x-tCcEAPa7uRJPuDOBZm_pZQq7PjPtAg6Ghc9L4So6pm8KyyW87l2j_ZD6jQ0Uo0XQRY9GqV2qjIwwsvVnqBX1e3mRmoXpxWh9_Q" alt="Ice Thai Milk Tea">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-arqZB1UamRHWnr65O-Z12Ffqj28P9v9W38g2X79mI09gLxOsoPnXMG4wVFHEtlDnzngYAXwqt_Pkr0YstTzh31KN6-sI982gwSCggM2fhz-9xS2m9MQnLWDmsDQ7_vV30qovOt78cOfK0659L6hrYKGCfMTcf5x-tCcEAPa7uRJPuDOBZm_pZQq7PjPtAg6Ghc9L4So6pm8KyyW87l2j_ZD6jQ0Uo0XQRY9GqV2qjIwwsvVnqBX1e3mRmoXpxWh9_Q" alt="Ice Thai Milk Tea" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Refreshing</span>
@@ -259,7 +308,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8snJR5xhJ33At3SdZfEl3R8pj8g-0swaFwxT7AmXGYBmsufz3DD7ydXITV_gE9lLQzohtFWczS3wDHT6-vPIR4DxUl8WaBGMktUn5OcfyrAa_6kaqDqqrWOZ-C1sZS6KxtjpLmm-O0wN6CSZKmDcfQ_bEW8MJ1gWG_wM4k9b3NBG7Jp-OgtkF7dODPw6BiBR9cqdCU_YUAu8RGA7Po_74s8V6oKkaFff13CWsMqluxAS6gfhLEm_2E2W5vjULks6lDA" alt="Ice Matcha Latte">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8snJR5xhJ33At3SdZfEl3R8pj8g-0swaFwxT7AmXGYBmsufz3DD7ydXITV_gE9lLQzohtFWczS3wDHT6-vPIR4DxUl8WaBGMktUn5OcfyrAa_6kaqDqqrWOZ-C1sZS6KxtjpLmm-O0wN6CSZKmDcfQ_bEW8MJ1gWG_wM4k9b3NBG7Jp-OgtkF7dODPw6BiBR9cqdCU_YUAu8RGA7Po_74s8V6oKkaFff13CWsMqluxAS6gfhLEm_2E2W5vjULks6lDA" alt="Ice Matcha Latte" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Pure Uji</span>
@@ -278,7 +327,7 @@
         <article class="product-card" data-category="non-coffee">
           <div>
             <div class="product-thumb">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP4mUVEQ0GX3bpyHDSWEsMDLNUHEo3vHme4Fp4jVeCNCGsBkYAuITTGa9HoK-SEU1MP9aTONDvDZezazVUjbDjXiQPG8Dv84jDUdqMOcKZToaEgcmqg0L4OgybwtyY1hAAfEoYfd9AGkoUJHFj2U9ZsPKTuvdaYYQJwU8aVF0IXJUzcyQVNRnKShS9-yS0g8vNx_ArG3WPkLS5V3NhXr5P2u6aDmWsIbLQ94JZrtjsL2TKkkmfBu1LpZvt_als7fztNw" alt="Ice Matcha Aren">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP4mUVEQ0GX3bpyHDSWEsMDLNUHEo3vHme4Fp4jVeCNCGsBkYAuITTGa9HoK-SEU1MP9aTONDvDZezazVUjbDjXiQPG8Dv84jDUdqMOcKZToaEgcmqg0L4OgybwtyY1hAAfEoYfd9AGkoUJHFj2U9ZsPKTuvdaYYQJwU8aVF0IXJUzcyQVNRnKShS9-yS0g8vNx_ArG3WPkLS5V3NhXr5P2u6aDmWsIbLQ94JZrtjsL2TKkkmfBu1LpZvt_als7fztNw" alt="Ice Matcha Aren" loading="lazy">
             </div>
             <div class="product-meta-top">
               <span class="badge-tag badge-bestseller">Signature</span>
@@ -300,9 +349,12 @@
   <footer class="site-footer">
     <div class="container footer-wrapper">
       <div class="footer-top">
-        <div>
+        <div class="footer-brand-group">
           <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZfnvPM9DEH76M1lpQmup1-hyheLau6ORiGJMQpf4iYSnYZf3rU9p8TTDeDiBpKEZgmeGUtNtaXgf_X3afsQD7brOoE1OTjRubYvuaSvUA_1Z2tZy03J-_u-d2LPFw1QAaw0fRJeyhanPC3FOVdtJ0Yke8ea5FZYtZDhOn9s1ghJVGgv68pe1I0Yd-LswBnWUE8arOYc-1s9q9RAHPediyIFNP2jaolm1DEiddKk_cBKSn9tB4aGhtmewlaHMt8ya6Cw" alt="Meera Coffee Logo" class="footer-logo">
-          <h3 class="footer-brand">Meera Coffee</h3>
+          <div>
+            <h3 class="footer-brand">Meera Coffee</h3>
+            <p style="font-size:0.8125rem; color:#8c8c8c;">Artisan Coffee &amp; Brews</p>
+          </div>
         </div>
         <div class="footer-social">
           <span>Ikuti Kami di Instagram</span>
