@@ -1135,7 +1135,8 @@ a {
 .btn-order-action {
   flex: 1;
   padding: 0.72rem 1rem;
-  border-radius: var(--radius-full);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
   font-family: var(--font-display);
   font-size: 0.82rem;
   font-weight: 800;
@@ -1158,18 +1159,21 @@ a {
 
 .btn-accept-order {
   background: #d97706;
+  border-color: #b45309;
   color: #fff;
   box-shadow: 0 4px 12px rgba(217, 119, 6, 0.22);
 }
 
 .btn-ready-order {
   background: #0d9488;
+  border-color: #0f766e;
   color: #fff;
   box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
 }
 
 .btn-complete-order {
   background: #16a34a;
+  border-color: #15803d;
   color: #fff;
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
 }
