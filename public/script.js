@@ -116,6 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
     renderCart();
   };
 
+  // Bar keranjang melayang & detail pesanan (data pemesan, pembayaran, ringkasan,
+  // tombol konfirmasi) hanya muncul setelah ada minimal satu menu yang dipilih.
+  function syncCartVisibility(hasItems) {
+    if (floatingCart) {
+      floatingCart.classList.toggle('is-visible', hasItems);
+      floatingCart.setAttribute('aria-hidden', hasItems ? 'false' : 'true');
+    }
+    if (cartDrawer) {
+      cartDrawer.classList.toggle('has-items', hasItems);
+    }
+  }
+
   function recalculateCart() {
     let totalItems = 0;
     let grandTotal = 0;
@@ -137,6 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (confirmBtn) {
       confirmBtn.textContent = `Konfirmasi Pesanan Sekarang (Rp ${grandTotal.toLocaleString('id-ID')})`;
     }
+
+    syncCartVisibility(totalItems > 0);
   }
 
   const paymentInputs = document.querySelectorAll('.payment-opt input[name="payment-opt"]');
@@ -398,4 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 2600);
     }
   }
+
+  // Keadaan awal: keranjang kosong, jadi bar melayang & detail pesanan tersembunyi
+  renderCart();
 });
